@@ -3,161 +3,149 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Quiet Ledger · an income written down every day, in public</title>
-<meta name="description" content="A quiet method that has paid me every day since April 2024. Every euro published live from Stripe. Join the waitlist.">
-<meta name="theme-color" content="#13201a">
-<link rel="preload" href="assets/hero-ledger.webp" as="image" fetchpriority="high">
+<title>Quiet Ledger · an income tracked live, every day</title>
+<meta name="description" content="A quiet method that has paid me almost every day since April 2024. Every euro published live from Stripe. Join the waitlist.">
+<meta name="theme-color" content="#0b0d14">
 <style>
-/* Quiet Ledger · waitlist. Direction: honest, exact, a little old-school. World: an accounts book, ink and paper.
-   Signature: the double rule under totals. Moment: the live ledger card with real Stripe numbers.
-   Unslop pass (unslop by @heydamir, CC BY 4.0). */
+/* Quiet Ledger · waitlist, in the style of the Telegram bot: night, glass, money green with glow, mono figures.
+   Moment: the live terminal card with real Stripe numbers. Signature: the segmented level meter. */
 @font-face{font-family:"Geist";src:url(assets/geist.woff2) format("woff2");font-weight:100 900;font-display:swap}
 @font-face{font-family:"Geist Mono";src:url(assets/geist-mono.woff2) format("woff2");font-weight:100 900;font-display:swap}
-@font-face{font-family:"Fraunces";src:url(assets/fraunces.woff2) format("woff2");font-weight:300 900;font-display:swap}
 :root{
-  --ledger:#e9efe4;--paper:#f4f1e6;--rule:#d6dfd0;--ink:#13201a;--ink2:#4a5a4f;--ink3:#6f7f73;
-  --credit:#1e7a4a;--debit:#c2412d;--line:rgba(19,32,26,.12);
-  --serif:"Fraunces",Georgia,serif;--sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
-  --ease:cubic-bezier(.22,1,.36,1);
+  --bg:#0b0d14;--deep:#07080d;--card:#11141c;--raised:#1a1e28;
+  --line:rgba(238,240,245,.08);--line2:rgba(238,240,245,.16);
+  --ink:#eef0f5;--ink2:#a3a9b8;--ink3:#7a8296;
+  --money:#4cc38a;--glow:rgba(76,195,138,.55);--down:#e5484d;
+  --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;--ease:cubic-bezier(.22,1,.36,1);
 }
 *{box-sizing:border-box;margin:0}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{background:var(--ledger);color:var(--ink);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(rgba(238,240,245,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(238,240,245,.025) 1px,transparent 1px);background-size:32px 32px}
 a{color:inherit}
-.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
-:focus-visible{outline:2px solid var(--credit);outline-offset:3px}
-
-/* nav */
-.nav{position:absolute;inset:0 0 auto;z-index:3;display:flex;justify-content:space-between;align-items:center;max-width:1240px;margin:0 auto;padding:24px 32px}
-.wm{font:600 20px/1 var(--serif);letter-spacing:-.01em;color:var(--paper);text-decoration:none}
-.wm::after{content:"";display:block;height:4px;margin-top:4px;border-top:1px solid currentColor;border-bottom:1px solid currentColor}
+:focus-visible{outline:2px solid var(--money);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+.ticker{overflow:hidden;border-bottom:1px solid var(--line);background:var(--deep)}
+.ticker .row{display:flex;gap:8px;padding:8px 0;width:max-content;animation:marquee 70s linear infinite}
+.tk{display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border-radius:6px;background:var(--card);font:400 12px var(--mono);color:var(--ink2);white-space:nowrap}
+.tk b{font-weight:500;color:var(--money)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.nav{display:flex;justify-content:space-between;align-items:center;height:72px}
+.wm{display:inline-flex;align-items:center;gap:10px;font:600 17px var(--sans);letter-spacing:-.01em;text-decoration:none}
+.wm i{width:9px;height:9px;border-radius:50%;background:var(--money);box-shadow:0 0 10px var(--money)}
 .nav .links{display:flex;gap:20px;align-items:center;font-size:14px}
-.nav .links a{color:#dfe8d9;text-decoration:none;transition:color .15s var(--ease)}
-.nav .links a:hover{color:var(--paper)}
-.nav .links a.btn{color:var(--ink)} .nav .links a.btn:hover{color:var(--ink)}
-.btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 20px;border-radius:10px;border:0;font:500 15px var(--sans);cursor:pointer;text-decoration:none;transition:background-color .15s var(--ease),transform .15s var(--ease)}
-.btn:active{transform:scale(.98)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn.paper{background:var(--paper);color:var(--ink)} .btn.paper:hover{background:#fffdf5}
-.btn.ink{background:var(--ink);color:var(--paper)} .btn.ink:hover{background:#21342b}
+.nav .links a:not(.btn){color:var(--ink2);text-decoration:none;transition:color .15s var(--ease)}
+.nav .links a:not(.btn):hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 20px;border-radius:10px;border:0;font:500 15px var(--sans);cursor:pointer;text-decoration:none;
+  background:var(--ink);color:var(--bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.4);transition:background-color .15s var(--ease),transform .15s var(--ease)}
+.btn:hover{background:#fff} .btn:active{transform:scale(.98)} .btn:disabled{opacity:.5;cursor:not-allowed}
 .nav .btn{height:36px;padding:0 16px;font-size:14px}
-
-/* hero: the ledger photo as the scene, the live ledger rising from the bottom */
-.hero{position:relative;min-height:760px;background:#13201a url(assets/hero-ledger.webp) 70% 50%/cover no-repeat;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(19,32,26,.92) 0%,rgba(19,32,26,.72) 42%,rgba(19,32,26,.15) 72%,rgba(19,32,26,0) 100%)}
-.hero .in{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:152px 32px 0}
-.hero h1{font:500 clamp(40px,5.4vw,64px)/1.04 var(--serif);letter-spacing:-.025em;color:var(--paper);max-width:12.5em}
-.hero .sub{margin-top:20px;max-width:34rem;font-size:19px;line-height:1.55;color:#cfd9cb}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:72px 0 96px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 13px var(--mono);color:var(--money)}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--money);box-shadow:0 0 8px var(--money);animation:live 2s var(--ease) infinite}
+@keyframes live{50%{opacity:.35}}
+h1{margin-top:16px;font:600 clamp(40px,5vw,60px)/1.04 var(--sans);letter-spacing:-.04em}
+h1 em{font-style:normal;color:var(--money);text-shadow:0 0 22px var(--glow)}
+.sub{margin-top:20px;max-width:32rem;font-size:18px;line-height:1.6;color:var(--ink2)}
 form{display:flex;gap:8px;margin-top:32px;max-width:30rem}
-input[type=email]{flex:1;min-width:0;height:44px;border-radius:10px;border:1px solid rgba(244,241,230,.35);background:rgba(19,32,26,.55);color:var(--paper);padding:0 14px;font:400 15px var(--sans)}
-input[type=email]::placeholder{color:#a9b8a8}
-input[type=email]:focus{outline:2px solid var(--paper);outline-offset:1px}
+input[type=email]{flex:1;min-width:0;height:44px;border-radius:10px;border:1px solid var(--line2);background:var(--card);color:var(--ink);padding:0 14px;font:400 15px var(--sans)}
+input[type=email]::placeholder{color:var(--ink3)}
+input[type=email]:focus{outline:2px solid var(--money);outline-offset:1px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.fine{margin-top:12px;font:400 13px var(--sans);color:#a9b8a8}
-.ok{margin-top:32px;max-width:30rem;padding:14px 16px;border-radius:10px;background:var(--paper);color:var(--ink);font-size:15px;display:none}
-.ok b{color:var(--credit)}
-
-/* live ledger card */
-.sheet{position:relative;z-index:1;max-width:1240px;margin:72px auto 0;padding:0 32px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:18px 18px 0 0;box-shadow:0 -20px 60px rgba(0,0,0,.28);padding:28px 32px 24px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px}
-.card .k{font:400 13px var(--sans);color:var(--ink2)}
-.live{display:inline-flex;align-items:center;gap:8px;font:500 13px var(--sans);color:var(--ink2)}
-.live i{width:7px;height:7px;border-radius:50%;background:var(--credit);animation:breathe 2s var(--ease) infinite}
-@keyframes breathe{50%{opacity:.3}}
-.today{display:inline-block;font:500 clamp(44px,5vw,60px)/1 var(--mono);letter-spacing:-.04em;color:var(--credit);margin:12px 0 4px;padding-bottom:8px;border-bottom:4px double var(--ink)}
-.today small{font-size:.4em;letter-spacing:0;margin-left:2px}
-.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
-.trio .v{font:500 20px/1.2 var(--mono);letter-spacing:-.02em;margin-top:2px}
-.entries{list-style:none;padding:0;font:400 13.5px var(--mono)}
-.entries li{display:flex;justify-content:space-between;align-items:center;height:36px;border-bottom:1px solid var(--rule)}
-.entries li span:first-child{color:var(--ink3)}
-.entries li b{font-weight:500;color:var(--credit)}
-.entries .head{font:400 13px var(--sans);color:var(--ink2);height:auto;border:0;margin-bottom:6px}
-.proof{margin-top:12px;font:400 12.5px var(--sans);color:var(--ink3)}
-
-/* sections */
-main{background:var(--paper)}
-section.s{max-width:1240px;margin:0 auto;padding:96px 32px;display:grid;grid-template-columns:1fr 1.3fr;gap:64px;border-top:1px solid var(--rule)}
-section.s:first-child{border-top:0}
-section.s h2{font:500 clamp(30px,3.4vw,40px)/1.12 var(--serif);letter-spacing:-.02em;max-width:12em}
+.fine{margin-top:12px;font:400 13px var(--mono);color:var(--ink3)}
+.ok{margin-top:32px;max-width:30rem;padding:14px 16px;border-radius:10px;border:1px solid rgba(76,195,138,.4);background:rgba(76,195,138,.08);font-size:15px;display:none}
+.ok b{color:var(--money)}
+.term{background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 1px rgba(76,195,138,.05)}
+.term .bar{display:flex;justify-content:space-between;align-items:center;font:400 12px var(--mono);color:var(--ink3)}
+.term .bar span:first-child{display:inline-flex;align-items:center;gap:8px;color:var(--ink2)}
+.term .bar i{width:7px;height:7px;border-radius:50%;background:var(--money);box-shadow:0 0 8px var(--money);animation:live 2s var(--ease) infinite}
+.term .k{font:400 13px var(--sans);color:var(--ink2);margin-top:18px}
+.today{font:600 clamp(56px,6vw,80px)/1 var(--sans);font-variant-numeric:tabular-nums;letter-spacing:-.05em;color:var(--money);text-shadow:0 0 28px var(--glow),0 0 2px var(--glow);margin:8px 0 6px}
+.today small{font-size:.4em;font-weight:500;letter-spacing:-.01em;margin-left:2px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{height:28px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border:1px solid var(--line2);border-radius:8px;font:400 12px var(--mono);color:var(--ink2)}
+.chip b{font-weight:500;color:var(--ink)} .chip .up{color:var(--money)} .chip .dn{color:var(--down)}
+.meter{display:flex;gap:4px;height:20px;margin-top:20px}
+.meter span{flex:1;border-radius:2px;background:var(--raised)}
+.meter span.on{background:var(--money);box-shadow:0 0 10px var(--glow)}
+.meter span.tip{background:rgba(76,195,138,.4)}
+.mnote{margin-top:8px;font:400 12px var(--mono);color:var(--ink2)}
+.mnote b{color:var(--ink);font-weight:500}
+svg.cum{width:100%;height:110px;display:block;margin-top:18px}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.trio>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--deep)}
+.trio .k{margin:0;font-size:12px}
+.trio .v{font:500 18px/1.2 var(--mono);letter-spacing:-.03em;margin-top:2px}
+section.s{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;padding:96px 0;border-top:1px solid var(--line)}
+section.s h2{font:600 clamp(28px,3.2vw,38px)/1.1 var(--sans);letter-spacing:-.035em;max-width:12em}
 section.s .lead{margin-top:16px;color:var(--ink2);max-width:30rem}
-.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-content:start}
-.fig .v{font:500 32px/1.1 var(--mono);letter-spacing:-.03em}
-.fig .v.tot{display:inline-block;padding-bottom:6px;border-bottom:4px double var(--ink)}
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-content:start}
+.fig{border:1px solid var(--line);border-radius:16px;padding:20px;background:var(--card)}
+.fig .v{font:500 30px/1.1 var(--mono);letter-spacing:-.04em}
+.fig .v.g{color:var(--money);text-shadow:0 0 18px var(--glow)}
 .fig .k{margin-top:8px;font-size:14px;color:var(--ink2)}
 .list{list-style:none;padding:0;counter-reset:n}
-.list li{counter-increment:n;display:grid;grid-template-columns:48px 1fr;gap:8px;padding:20px 0;border-bottom:1px solid var(--rule)}
-.list li::before{content:counter(n,decimal-leading-zero);font:400 13px var(--mono);color:var(--ink3);padding-top:3px}
+.list li{counter-increment:n;display:grid;grid-template-columns:48px 1fr;gap:8px;padding:20px 0;border-bottom:1px solid var(--line)}
+.list li::before{content:counter(n,decimal-leading-zero);font:400 13px var(--mono);color:var(--money);padding-top:3px}
 .list b{font-weight:500;display:block}
 .list span{color:var(--ink2);font-size:15px}
-details{border-bottom:1px solid var(--rule);padding:18px 0}
+details{border-bottom:1px solid var(--line);padding:18px 0}
 summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:16px}
 summary::after{content:"+";font:400 18px var(--mono);color:var(--ink3);transition:transform .2s var(--ease)}
 details[open] summary::after{transform:rotate(45deg)}
 details p{margin-top:10px;color:var(--ink2);max-width:40rem}
-.cta{background:var(--ink);color:var(--paper)}
-.cta .in{max-width:1240px;margin:0 auto;padding:80px 32px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
-.cta h2{font:500 clamp(28px,3.2vw,38px)/1.15 var(--serif);letter-spacing:-.02em;max-width:16em}
+.cta{border-top:1px solid var(--line);padding:88px 0;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
+.cta h2{font:600 clamp(28px,3.2vw,38px)/1.1 var(--sans);letter-spacing:-.035em;max-width:16em}
 .cta form{margin-top:0}
-footer{background:var(--ink);color:#a9b8a8;font-size:13px;border-top:1px solid rgba(244,241,230,.12)}
-footer .in{max-width:1240px;margin:0 auto;padding:24px 32px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-
+footer{border-top:1px solid var(--line);color:var(--ink3);font:400 13px var(--mono)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:24px;padding-bottom:24px}
 @media (max-width:900px){
-  .card{grid-template-columns:1fr;gap:24px}
-  section.s{grid-template-columns:1fr;gap:32px;padding:64px 24px}
+  .hero{grid-template-columns:1fr;gap:40px;padding:40px 0 64px}
+  section.s{grid-template-columns:1fr;gap:32px;padding:64px 0}
   .nav .links a:not(.btn){display:none}
 }
 @media (max-width:600px){
-  .nav{padding:20px}
-  .hero{min-height:0}
-  .hero .in{padding:112px 20px 0}
-  .hero h1{font-size:40px}
-  .hero .sub{font-size:17px}
-  form{flex-direction:column}
-  input[type=email]{flex:none;height:48px}
-  .hero::before{background:linear-gradient(180deg,rgba(19,32,26,.9) 0%,rgba(19,32,26,.82) 55%,rgba(19,32,26,.55) 100%)}
-  .sheet{padding:0 12px;margin-top:48px}
-  .card{padding:22px 20px 18px}
-  .trio{gap:10px}.trio .v{font-size:17px}
-  .figs{grid-template-columns:1fr 1fr}
-  .cta .in{padding:56px 20px}
+  .wrap{padding:0 20px}
+  h1{font-size:40px} .sub{font-size:17px}
+  form{flex-direction:column} input[type=email]{flex:none;height:48px}
+  .term{padding:20px}
+  .figs{grid-template-columns:1fr}
 }
-@media (prefers-reduced-motion:reduce){.live i{animation:none}*{transition:none!important;scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){.ticker .row,.eyebrow i,.term .bar i{animation:none}*{transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<header class="hero">
-  <nav class="nav"><a class="wm" href="#">Quiet Ledger</a><div class="links"><a href="https://tristangrech.github.io/fullhaura-earnings/" target="_blank" rel="noopener">See the live ledger</a><a class="btn paper" href="#join">Join the waitlist</a></div></nav>
-  <div class="in" id="join">
-    <h1>An income I write down every day, in public</h1>
-    <p class="sub">Since April 2024, a quiet method has paid me almost every day. Every euro is published live from Stripe, so you can check it yourself. Join the waitlist to learn it when the doors open.</p>
-    <form data-form><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email" autocomplete="email"><input class="hp" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn paper" type="submit">Join the waitlist</button></form>
-    <p class="fine">One email when the doors open. No spam, unsubscribe anytime.</p>
-    <p class="ok" data-ok>You're on the list. <b>Watch your inbox</b> when the doors open.</p>
-  </div>
-  <div class="sheet" aria-label="Live ledger">
-    <div class="card">
-      <div>
-        <span class="live"><i></i>Live from Stripe</span>
-        <div class="k" style="margin-top:14px" id="todayLbl">Credited today</div>
-        <div class="today" id="today">…</div>
-        <div class="trio">
-          <div><div class="k">This month</div><div class="v" id="month">…</div></div>
-          <div><div class="k">All time</div><div class="v" id="all">…</div></div>
-          <div><div class="k">Streak</div><div class="v" id="streak">…</div></div>
-        </div>
-        <p class="proof">Real payouts, updated every few minutes. Names and account details stay private.</p>
-      </div>
-      <ul class="entries" id="entries"><li class="head">Latest entries</li></ul>
+<div class="ticker" aria-hidden="true"><div class="row" id="ticker"></div></div>
+<div class="wrap">
+  <nav class="nav"><a class="wm" href="#"><i></i>quiet ledger</a><div class="links"><a href="https://tristangrech.github.io/fullhaura-earnings/" target="_blank" rel="noopener">See the live ledger</a><a class="btn" href="#join">Join the waitlist</a></div></nav>
+  <header class="hero">
+    <div id="join">
+      <span class="eyebrow"><i></i>Live from Stripe</span>
+      <h1>An income I track <em>live</em>, every single day</h1>
+      <p class="sub">Since April 2024, a quiet method has paid me almost every day. Every euro is published live from Stripe, so you can check it yourself. Join the waitlist to learn it when the doors open.</p>
+      <form data-form><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email" autocomplete="email"><input class="hp" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn" type="submit">Join the waitlist</button></form>
+      <p class="fine">One email when the doors open. No spam.</p>
+      <p class="ok" data-ok>You're on the list. <b>Watch your inbox</b> when the doors open.</p>
     </div>
-  </div>
-</header>
-
-<main>
+    <div class="term" aria-label="Live ledger">
+      <div class="bar"><span><i></i>quiet ledger · live</span><span id="clock"></span></div>
+      <div class="k" id="todayLbl">Today's revenue</div>
+      <div class="today" id="today">…</div>
+      <div class="chips" id="chips"></div>
+      <div class="meter" id="meter"></div>
+      <p class="mnote" id="mnote"></p>
+      <svg class="cum" id="cum" viewBox="0 0 400 110" preserveAspectRatio="none" role="img" aria-label="Today versus yesterday by time of day"></svg>
+      <div class="trio">
+        <div><div class="k">This month</div><div class="v" id="month">…</div></div>
+        <div><div class="k">All time</div><div class="v" id="all">…</div></div>
+        <div><div class="k">Streak</div><div class="v" id="streak">…</div></div>
+      </div>
+    </div>
+  </header>
   <section class="s">
     <div><h2>The honest numbers</h2><p class="lead">Most of what I've built earns a little and a few parts earn a lot. Together it makes a steady side income that grows slowly.</p></div>
     <div class="figs">
-      <div class="fig"><div class="v tot" id="f30">…</div><div class="k">Credited in the last 30 days</div></div>
+      <div class="fig"><div class="v g" id="f30">…</div><div class="k">Last 30 days</div></div>
       <div class="fig"><div class="v" id="fday">…</div><div class="k">On an average day</div></div>
       <div class="fig"><div class="v" id="fmed">…</div><div class="k">What a typical stream earns in a month</div></div>
     </div>
@@ -169,7 +157,7 @@ footer .in{max-width:1240px;margin:0 auto;padding:24px 32px;display:flex;justify
       <li><div><b>Your first stream in an afternoon</b><span>With less than €200 of equipment and a quiet room.</span></div></li>
       <li><div><b>Why one stream earns ten times another</b><span>The details that decide it, taken from my own best and worst.</span></div></li>
       <li><div><b>Growing it the right way</b><span>Adding streams with people you know, with written agreements.</span></div></li>
-      <li><div><b>Payouts, taxes and tracking</b><span>How the money arrives, what to declare, and how I track every euro.</span></div></li>
+      <li><div><b>Payouts, taxes and tracking</b><span>How the money arrives, what to declare, and the tools I use to track every euro, live.</span></div></li>
     </ol>
   </section>
   <section class="s">
@@ -181,34 +169,49 @@ footer .in{max-width:1240px;margin:0 auto;padding:24px 32px;display:flex;justify
       <details><summary>How much does it cost?</summary><p>The price is announced to the waitlist first, before anyone else.</p></details>
     </div>
   </section>
-  <div class="cta"><div class="in"><h2>Be first when the doors open</h2>
-    <form data-form><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email" autocomplete="email"><input class="hp" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn paper" type="submit">Join the waitlist</button></form>
+  <div class="cta"><h2>Be first when the doors open</h2>
+    <div><form data-form><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email" autocomplete="email"><input class="hp" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn" type="submit">Join the waitlist</button></form>
     <p class="ok" data-ok>You're on the list. <b>Watch your inbox</b> when the doors open.</p></div></div>
-</main>
-<footer><div class="in"><span>Quiet Ledger by Fullhaura</span><span>Figures are real Stripe payouts, published live. Past results don't guarantee yours.</span></div></footer>
-
+</div>
+<footer><div class="wrap"><span>quiet ledger by Fullhaura</span><span>Real Stripe payouts, published live. Past results don't guarantee yours.</span></div></footer>
 <script>
 const DATA = "https://raw.githubusercontent.com/tristangrech/fullhaura-earnings/data/", HOOK = "https://www.cloudroom.dev/api/hooks/4bBVWBS-5IcCPVCEDn1zNzJwzz0Jo9ai2dLNPVRZtyU";
 const eur = c => (c/100).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
 const eur0 = c => (c/100).toLocaleString('fr-FR',{maximumFractionDigits:0}) + ' €';
 const hm = ts => new Date(ts*1000).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Rome'});
 const $ = id => document.getElementById(id);
+const clock = () => $('clock').textContent = new Date().toLocaleTimeString('en-GB',{timeZone:'Europe/Rome'});
+clock(); setInterval(clock, 1000);
 (async () => {
   try {
     const [L, D] = await Promise.all(['live.json','data.json'].map(f => fetch(DATA + f + '?t=' + Date.now(), {cache:'no-store'}).then(r => r.json())));
-    const today = L.today.reduce((a,p)=>a+p[1],0);
-    $('today').innerHTML = eur(today).replace(' €','<small> €</small>');
-    $('todayLbl').textContent = `Credited today, by ${hm(L.now)}`;
-    $('month').textContent = eur(L.month);
-    const N = D.N, total = Array.from({length:N},(_,d)=>D.daily.reduce((a,v)=>a+v[d],0));
-    $('all').textContent = eur0(total.reduce((a,b)=>a+b,0));
-    $('streak').textContent = `${L.streak} days`;
-    $('entries').innerHTML = '<li class="head">Latest entries</li>' + L.today.slice(0,6).map(p=>`<li><span>${hm(p[0])}</span><b>+${eur(p[1])}</b></li>`).join('');
-    const last30 = total.slice(N-31, N-1).reduce((a,b)=>a+b,0);
+    const total = L.today.reduce((a,p)=>a+p[1],0), nowS = Date.now()/1000, since = Math.min(86400, nowS - L.t0);
+    $('today').innerHTML = eur(total).replace(' €','<small> €</small>');
+    $('todayLbl').textContent = `Today's revenue, by ${hm(L.now)}`;
+    const ySame = L.yday.filter(p=>p[0] <= since).reduce((a,p)=>a+p[1],0), hour = L.today.filter(p=>p[0] >= L.now-3600).reduce((a,p)=>a+p[1],0);
+    const pc = ySame ? Math.round((total-ySame)/ySame*100) : null;
+    $('chips').innerHTML = `<span class="chip"><b>+${eur(hour)}</b>last hour</span>` + (pc===null?'':`<span class="chip"><b class="${pc>=0?'up':'dn'}">${pc>=0?'▲':'▼'} ${Math.abs(pc)} %</b>vs yesterday</span>`);
+    const SEG = 30, frac = L.record ? total/L.record : 0, on = Math.min(SEG, Math.floor(frac*SEG));
+    $('meter').innerHTML = Array.from({length:SEG},(_,i)=>`<span class="${i<on?'on':i===on&&frac<1?'tip':''}"></span>`).join('');
+    $('mnote').innerHTML = `<b>${Math.round(frac*100)} %</b> of the all-time record day (${eur(L.record)})`;
+    const W=400,H=110,pad=4, maxY = Math.max(total, L.yday.reduce((a,p)=>a+p[1],0), 1);
+    const X = s => pad + s/86400*(W-2*pad), Y = c => H-pad - c/maxY*(H-2*pad), path = pts => pts.map((p,i)=>`${i?'L':'M'}${X(p[0]).toFixed(1)} ${Y(p[1]).toFixed(1)}`).join(' ');
+    let c=0; const yP=[[0,0]]; for (const [s,n] of L.yday){ c+=n; yP.push([s,c]); } yP.push([86400,c]);
+    c=0; const tP=[[0,0]]; for (const [ts,n] of [...L.today].reverse()){ c+=n; tP.push([ts-L.t0,c]); } tP.push([since,c]);
+    $('cum').innerHTML = `<path d="${path(yP)}" fill="none" stroke="#7a8296" stroke-width="1.5" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
+      <path d="${path(tP)} L${X(since).toFixed(1)} ${H-pad} L${pad} ${H-pad} Z" fill="rgba(76,195,138,.12)"/>
+      <path d="${path(tP)}" fill="none" stroke="#4cc38a" stroke-width="2" vector-effect="non-scaling-stroke" style="filter:drop-shadow(0 0 6px rgba(76,195,138,.7))"/>
+      <circle cx="${X(since)}" cy="${Y(total)}" r="3.5" fill="#eef0f5"/>`;
+    $('month').textContent = eur0(L.month); $('streak').textContent = `${L.streak} days`;
+    const N = D.N, tot = Array.from({length:N},(_,d)=>D.daily.reduce((a,v)=>a+v[d],0));
+    $('all').textContent = eur0(tot.reduce((a,b)=>a+b,0));
+    const last30 = tot.slice(N-31, N-1).reduce((a,b)=>a+b,0);
     $('f30').textContent = eur0(last30); $('fday').textContent = eur(Math.round(last30/30));
     const per = D.daily.map(v => v.slice(N-31, N-1).reduce((a,b)=>a+b,0)).sort((a,b)=>a-b);
     $('fmed').textContent = eur0(per[Math.floor(per.length/2)]);
-  } catch (e) { $('today').textContent = 'Live numbers loading…'; }
+    const tk = L.today.slice(0,24).map(p=>`<span class="tk">${hm(p[0])} <b>+${eur(p[1])}</b></span>`).join('');
+    $('ticker').innerHTML = tk + tk;
+  } catch (e) { $('today').textContent = 'Loading…'; }
 })();
 document.querySelectorAll('[data-form]').forEach(f => f.addEventListener('submit', async e => {
   e.preventDefault();
